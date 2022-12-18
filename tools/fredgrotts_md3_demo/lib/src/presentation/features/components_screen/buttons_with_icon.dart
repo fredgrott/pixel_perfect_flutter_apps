@@ -1,12 +1,15 @@
 // Copyright 2022 Fredrick Allan Grott. All rights reserved.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
+//
+// Original is md3 demo by Flutter Team as part of
+// the experimental part of Flutter Samples under BSD-clause 3 license
+// copyrigth 2021 see: https://github.com/flutter/samples/tree/main/experimental/material_3_demo
 
-import 'dart:developer';
 
-import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:fredgrotts_md3_demo/src/domain/entities/divider.dart';
+import 'package:fredgrotts_md3_demo/src/presentation/features/components_screen/buttons.dart';
 
 class ButtonsWithIcon extends StatefulWidget {
   @override
@@ -16,7 +19,7 @@ class ButtonsWithIcon extends StatefulWidget {
 class _ButtonsWithIconState extends State<ButtonsWithIcon> {
   @override
   Widget build(BuildContext context) {
-    late Flushbar<bool> flush;
+    
 
 
     return IntrinsicWidth(
@@ -24,175 +27,31 @@ class _ButtonsWithIconState extends State<ButtonsWithIcon> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           ElevatedButton.icon(
-            onPressed: () {
-              flush = Flushbar<bool>(
-                margin: const EdgeInsets.all(8),
-                borderRadius: BorderRadius.circular(8),
-                duration: const Duration(seconds: 45),
-                backgroundColor: Theme.of(context).colorScheme.background,
-                messageText: Text(
-                  'Yay! ElevatedButton is clicked',
-                  style:
-                      TextStyle(color: Theme.of(context).colorScheme.surface),
-                ),
-                mainButton: ElevatedButton(
-                  onPressed: () {
-                    flush.dismiss(true);
-                  },
-                  child: Text(
-                    "Close",
-                    style: TextStyle(
-                      color: Theme.of(context).colorScheme.onPrimaryContainer,
-                    ),
-                  ),
-                ),
-              )..show(context).then((result) {
-                  setState(() {
-                    // setState() is optional here
-                    log("Dismissed");
-                  });
-                });
-            },
+            onPressed: handlePressed(context, false, 'ElevatedButton'),
             icon: const Icon(Icons.add),
             label: const Text('Icon'),
           ),
           colDivider,
           FilledButton.icon(
-            onPressed: () {
-              flush = Flushbar<bool>(
-                margin: const EdgeInsets.all(8),
-                borderRadius: BorderRadius.circular(8),
-                duration: const Duration(seconds: 45),
-                backgroundColor: Theme.of(context).colorScheme.background,
-                messageText: Text(
-                  'Yay! FilledButton is clicked',
-                  style:
-                      TextStyle(color: Theme.of(context).colorScheme.onBackground),
-                ),
-                messageColor: Theme.of(context).colorScheme.onBackground,
-                mainButton: ElevatedButton(
-                  onPressed: () {
-                    flush.dismiss(true);
-                  },
-                  child: Text(
-                    "Close",
-                    style: TextStyle(
-                      color: Theme.of(context).colorScheme.onPrimaryContainer,
-                    ),
-                  ),
-                ),
-              )..show(context).then((result) {
-                  setState(() {
-                    // setState() is optional here
-                    log("Dismissed");
-                  });
-                });
-            },
+            onPressed: handlePressed(context, false, 'FilledButton'),
             label: const Text('Icon'),
             icon: const Icon(Icons.add),
           ),
           colDivider,
           FilledButton.tonalIcon(
-            onPressed: () {
-              flush = Flushbar<bool>(
-                margin: const EdgeInsets.all(8),
-                borderRadius: BorderRadius.circular(8),
-                duration: const Duration(seconds: 45),
-                backgroundColor: Theme.of(context).colorScheme.background,
-                messageText: Text(
-                  'Yay! FilledButton Tonal is clicked',
-                  style:
-                      TextStyle(color: Theme.of(context).colorScheme.onBackground),
-                ),
-                messageColor: Theme.of(context).colorScheme.onBackground,
-                mainButton: ElevatedButton(
-                  onPressed: () {
-                    flush.dismiss(true);
-                  },
-                  child: Text(
-                    "Close",
-                    style: TextStyle(
-                      color: Theme.of(context).colorScheme.onPrimaryContainer,
-                    ),
-                  ),
-                ),
-              )..show(context).then((result) {
-                  setState(() {
-                    // SetState() is optional here.
-                    log("Dismissed");
-                  });
-                });
-            },
+            onPressed: handlePressed(context, false, 'Filled TonalButton'),
             label: const Text('Icon'),
             icon: const Icon(Icons.add),
           ),
           colDivider,
           OutlinedButton.icon(
-            onPressed: () {
-              flush = Flushbar<bool>(
-                margin: const EdgeInsets.all(8),
-                borderRadius: BorderRadius.circular(8),
-                duration: const Duration(seconds: 45),
-                backgroundColor: Theme.of(context).colorScheme.background,
-                messageText: Text(
-                  'Yay! OutlinedButton is clicked',
-                  style:
-                      TextStyle(color: Theme.of(context).colorScheme.onBackground),
-                ),
-                messageColor: Theme.of(context).colorScheme.onBackground,
-                mainButton: ElevatedButton(
-                  onPressed: () {
-                    flush.dismiss(true);
-                  },
-                  child: Text(
-                    "Close",
-                    style: TextStyle(
-                      color: Theme.of(context).colorScheme.onPrimaryContainer,
-                    ),
-                  ),
-                ),
-              )..show(context).then((result) {
-                  setState(() {
-                   // SetState() is optional here.e
-                    log("Dismissed");
-                  });
-                });
-            },
+            onPressed: handlePressed(context, false, 'Outlined Button'),
             icon: const Icon(Icons.add),
             label: const Text('Icon'),
           ),
           colDivider,
           TextButton.icon(
-            onPressed: () {
-              flush = Flushbar<bool>(
-                margin: const EdgeInsets.all(8),
-                borderRadius: BorderRadius.circular(8),
-                duration: const Duration(seconds: 45),
-                backgroundColor: Theme.of(context).colorScheme.background,
-                messageText: Text(
-                  'Yay! TextButton is clicked',
-                  style:
-                      TextStyle(color: Theme.of(context).colorScheme.onBackground),
-                ),
-                messageColor: Theme.of(context).colorScheme.onBackground,
-                mainButton: ElevatedButton(
-                  onPressed: () {
-                    flush.dismiss(true);
-                  },
-                  child: Text(
-                    "Close",
-                    style: TextStyle(
-                      color: Theme.of(context).colorScheme.onPrimaryContainer,
-                    ),
-                  ),
-                ),
-              )..show(context).then((result) {
-                  setState(() {
-                    // setState() is optional here
-                    log("Dismissed");
-                  });
-                });
-            },
+            onPressed: handlePressed(context, false, 'Text Button'),
             icon: const Icon(Icons.add),
             label: const Text('Icon'),
           ),

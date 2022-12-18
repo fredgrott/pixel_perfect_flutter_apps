@@ -16,11 +16,18 @@ import 'package:fredgrotts_md3_demo/src/domain/entities/color_schemes_list.dart'
 import 'package:fredgrotts_md3_demo/src/domain/entities/screen_selected.dart';
 import 'package:fredgrotts_md3_demo/src/presentation/custom_animated_theme/animation_type.dart';
 import 'package:fredgrotts_md3_demo/src/presentation/custom_animated_theme/custom_animated_theme_app.dart';
-import 'package:fredgrotts_md3_demo/src/presentation/features/color_screen/color_scheme_palettes_screen.dart';
-import 'package:fredgrotts_md3_demo/src/presentation/features/components_screen/components_screen.dart';
+import 'package:fredgrotts_md3_demo/src/presentation/features/color_screen/centered_color_palettes_screen.dart';
+
+import 'package:fredgrotts_md3_demo/src/presentation/features/components_screen/centered_components_screen.dart';
+
+
+
+
 import 'package:fredgrotts_md3_demo/src/presentation/features/components_screen/navigation_stuff.dart';
-import 'package:fredgrotts_md3_demo/src/presentation/features/elevation_screen/elevation_screen.dart';
-import 'package:fredgrotts_md3_demo/src/presentation/features/typography_screen/typography_screen.dart';
+import 'package:fredgrotts_md3_demo/src/presentation/features/elevation_screen/centered_elevation_screen.dart';
+
+import 'package:fredgrotts_md3_demo/src/presentation/features/typography_screen/centered_typography_screen.dart';
+
 import 'package:fredgrotts_md3_demo/src/presentation/themes/static_theme_datas.dart';
 import 'package:fredgrotts_md3_demo/src/presentation/widgets/platform_selector.dart';
 
@@ -92,6 +99,9 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    
+
+
     return CustomAnimatedThemeApp(
       debugShowCheckedModeBanner: false,
       animationDuration: const Duration(milliseconds: 500),
@@ -129,6 +139,13 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
         ],
         child: Scaffold(
           body: AdaptiveLayout(
+            
+            // MediaQuery displayFeatures is only non-null on Android foldables, 
+            // in my setting bodyRatio to 1.0 I am using the free canvas mode
+            // where content is dispalyed on both screen one and screen two.
+            // Two Pane patterns will require extra boilerplate to 
+            // cycle between non-foldables and foldables.
+            bodyRatio: 1.0,
             topNavigation: SlotLayout(
               config: {
                 Breakpoints.smallAndUp: SlotLayout.from(
@@ -188,44 +205,15 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
             ),
             body: SlotLayout(
               config: {
-                Breakpoints.small: SlotLayout.from(
+                Breakpoints.smallAndUp: SlotLayout.from(
                   key: const Key("Body Small"),
                   // Temp workaround as Adaptive Layout does not use the Flutter SDK scaffold internally.
                   builder: (context) => createScreenFor(
-                    ScreenSelected.values[screenIndex],
-                    true,
+                      ScreenSelected.values[screenIndex],
+                      true,
+                    ),
                   ),
-                ),
-                Breakpoints.medium: SlotLayout.from(
-                  key: const Key("Body Medium"),
-                  builder: (context) => CustomBoxy(
-                    delegate: MediumBoxyDelegate(myContext: context),
-                    children: [
-                      BoxyId(
-                        id: #railBodyContent,
-                        child: createScreenFor(
-                          ScreenSelected.values[screenIndex],
-                          true,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Breakpoints.large: SlotLayout.from(
-                  key: const Key("Body Large"),
-                  builder: (context) => CustomBoxy(
-                    delegate: LargeBoxyDelegate(myContext: context),
-                    children: [
-                      BoxyId(
-                        id: #railExtendedBodyContent,
-                        child: createScreenFor(
-                          ScreenSelected.values[screenIndex],
-                          true,
-                        ),
-                      ),
-                    ],
-                  ),
-                  ),
+                
               },
             ),
             secondaryBody: SlotLayout(
@@ -288,15 +276,15 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
   ) {
     switch (screenSelected) {
       case ScreenSelected.component:
-        return ComponentScreen(showNavBottomBar: showNavBarExample);
+        return CenteredComponentsScreen(showNavBottomBar: true,);
       case ScreenSelected.color:
-        return ColorSchemePalettesScreen();
+        return CenteredColorPalettesScreen();
       case ScreenSelected.typography:
-        return TypographyScreen();
+        return CenteredTypographyScreen();
       case ScreenSelected.elevation:
-        return const ElevationScreen();
+        return CenteredElevationScreen();
       default:
-        return ComponentScreen(showNavBottomBar: showNavBarExample);
+        return CenteredComponentsScreen(showNavBottomBar: true,);
     }
   }
 
@@ -372,48 +360,3 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
   }
 }
 
-// General idea is we grab screen size
-// via context and subtract rail non extended
-// and then divide by 2 get the correct offset
-// value for the content panel as we do not
-// have any access to the internals of the MultiChildlayout that
-// Adaptive Layout happens to use.
-class MediumBoxyDelegate extends BoxyDelegate {
-  BuildContext myContext;
-  MediumBoxyDelegate({
-    required this.myContext,
-  });
-
-  @override
-  Size layout() {
-    final double myScreen = MediaQuery.of(myContext).size.width;
-
-    final content = getChild(#railBodyContent);
-
-    final contentSize = content.layout(constraints);
-
-    content.position(Offset(((myScreen - contentSize.width) / 2)- 75, 0,));
-
-    return Size(contentSize.width, contentSize.height,);
-  }
-}
-
-class LargeBoxyDelegate extends BoxyDelegate {
-  BuildContext myContext;
-  LargeBoxyDelegate({
-    required this.myContext,
-  });
-
-  @override
-  Size layout() {
-    final double myScreen = MediaQuery.of(myContext).size.width;
-
-    final content = getChild(#railExtendedBodyContent);
-
-    final contentSize = content.layout(constraints);
-
-    content.position(Offset(((myScreen - contentSize.width) / 2) - 175, 0,));
-
-    return Size(contentSize.width, contentSize.height,);
-  }
-}

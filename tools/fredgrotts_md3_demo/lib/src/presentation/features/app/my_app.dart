@@ -4,13 +4,13 @@
 
 // ignore_for_file: avoid_redundant_argument_values, cast_nullable_to_non_nullable, no_leading_underscores_for_local_identifiers, prefer_final_locals, unused_local_variable
 
-import 'package:animations/animations.dart';
-import 'package:boxy/boxy.dart';
+import 'package:catcher/catcher.dart';
 import 'package:community_material_icon/community_material_icon.dart';
 import 'package:design_tools/design_tools.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_adaptive_scaffold/flutter_adaptive_scaffold.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 
 import 'package:fredgrotts_md3_demo/src/domain/entities/color_schemes_list.dart';
 import 'package:fredgrotts_md3_demo/src/domain/entities/screen_selected.dart';
@@ -20,16 +20,12 @@ import 'package:fredgrotts_md3_demo/src/presentation/features/color_screen/cente
 
 import 'package:fredgrotts_md3_demo/src/presentation/features/components_screen/centered_components_screen.dart';
 
-
-
-
 import 'package:fredgrotts_md3_demo/src/presentation/features/components_screen/navigation_stuff.dart';
 import 'package:fredgrotts_md3_demo/src/presentation/features/elevation_screen/centered_elevation_screen.dart';
 
 import 'package:fredgrotts_md3_demo/src/presentation/features/typography_screen/centered_typography_screen.dart';
 
 import 'package:fredgrotts_md3_demo/src/presentation/themes/static_theme_datas.dart';
-import 'package:fredgrotts_md3_demo/src/presentation/widgets/platform_selector.dart';
 
 bool isDesignGrid = false;
 
@@ -40,13 +36,6 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
   int screenIndex = ScreenSelected.component.value;
-
-  void onChangedPlatform(TargetPlatform platform) {
-    setState(() {
-      // ignore: prefer-correct-identifier-length
-      var debugDefaultTargetPlatformOverride = platform;
-    });
-  }
 
   bool onDesignGrid() {
     setState(() {
@@ -99,24 +88,22 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    
-
-
     return CustomAnimatedThemeApp(
+      // For Cateche so that page and dialog reprots can be shown.
+      navigatorKey: Catcher.navigatorKey,
       debugShowCheckedModeBanner: false,
       animationDuration: const Duration(milliseconds: 500),
       animationType: AnimationType.fadeAnimatedTheme,
       themeMode: ThemeMode.light,
       theme: themeData.copyWith(
-        platform: defaultTargetPlatform,
         pageTransitionsTheme: const PageTransitionsTheme(
           builders: {
-            TargetPlatform.android: FadeThroughPageTransitionsBuilder(),
-            TargetPlatform.iOS: FadeThroughPageTransitionsBuilder(),
-            TargetPlatform.fuchsia: FadeThroughPageTransitionsBuilder(),
-            TargetPlatform.linux: FadeThroughPageTransitionsBuilder(),
-            TargetPlatform.macOS: FadeThroughPageTransitionsBuilder(),
-            TargetPlatform.windows: FadeThroughPageTransitionsBuilder(),
+            TargetPlatform.android: ZoomPageTransitionsBuilder(),
+            TargetPlatform.iOS: ZoomPageTransitionsBuilder(),
+            TargetPlatform.fuchsia: ZoomPageTransitionsBuilder(),
+            TargetPlatform.linux: ZoomPageTransitionsBuilder(),
+            TargetPlatform.macOS: ZoomPageTransitionsBuilder(),
+            TargetPlatform.windows: ZoomPageTransitionsBuilder(),
           },
         ),
       ),
@@ -139,11 +126,10 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
         ],
         child: Scaffold(
           body: AdaptiveLayout(
-            
-            // MediaQuery displayFeatures is only non-null on Android foldables, 
+            // MediaQuery displayFeatures is only non-null on Android foldables,
             // in my setting bodyRatio to 1.0 I am using the free canvas mode
             // where content is dispalyed on both screen one and screen two.
-            // Two Pane patterns will require extra boilerplate to 
+            // Two Pane patterns will require extra boilerplate to
             // cycle between non-foldables and foldables.
             bodyRatio: 1.0,
             topNavigation: SlotLayout(
@@ -209,11 +195,10 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
                   key: const Key("Body Small"),
                   // Temp workaround as Adaptive Layout does not use the Flutter SDK scaffold internally.
                   builder: (context) => createScreenFor(
-                      ScreenSelected.values[screenIndex],
-                      true,
-                    ),
+                    ScreenSelected.values[screenIndex],
+                    true,
                   ),
-                
+                ),
               },
             ),
             secondaryBody: SlotLayout(
@@ -276,7 +261,9 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
   ) {
     switch (screenSelected) {
       case ScreenSelected.component:
-        return CenteredComponentsScreen(showNavBottomBar: true,);
+        return CenteredComponentsScreen(
+          showNavBottomBar: true,
+        );
       case ScreenSelected.color:
         return CenteredColorPalettesScreen();
       case ScreenSelected.typography:
@@ -284,15 +271,28 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
       case ScreenSelected.elevation:
         return CenteredElevationScreen();
       default:
-        return CenteredComponentsScreen(showNavBottomBar: true,);
+        return CenteredComponentsScreen(
+          showNavBottomBar: true,
+        );
     }
   }
+
+  
 
   // Need to wrap in Sized box as we are using a different implementation.
   // ignore: long-method
   PreferredSizeWidget createAppBar() {
+    Widget appTitle = const Text("Material 3");
+
+    appTitle =
+        appTitle.animate(onPlay: (controller) => controller.repeat()).shimmer(
+              duration: 1200.ms,
+              color: Theme.of(context).colorScheme.secondary,
+            );
+
+
     return AppBar(
-      title: const Text('Material 3'),
+      title: appTitle,
       actions: [
         Visibility(
           maintainSize: true,
@@ -304,19 +304,6 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
             icon: const Icon(CommunityMaterialIcons.grid),
           ),
         ),
-
-        // only visible for debug so that can
-        // verify platform visual adaptations manually.
-        Visibility(
-          maintainSize: true,
-          maintainAnimation: true,
-          maintainState: true,
-          visible: kDebugMode,
-          child: PlatformSelector(
-            onChangedPlatform: onChangedPlatform,
-          ),
-        ),
-
         PopupMenuButton(
           icon: const Icon(CommunityMaterialIcons.theme_light_dark),
           shape: const RoundedRectangleBorder(
@@ -359,4 +346,3 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
     );
   }
 }
-

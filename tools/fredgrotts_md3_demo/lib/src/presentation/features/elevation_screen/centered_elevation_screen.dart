@@ -7,9 +7,12 @@
 // copyrigth 2021 see: https://github.com/flutter/samples/tree/main/experimental/material_3_demo
 
 import 'package:flutter/material.dart';
-import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
-import 'package:fredgrotts_md3_demo/src/presentation/features/elevation_screen/elevation_gird.dart';
-import 'package:fredgrotts_md3_demo/src/presentation/widgets/centered_page_body.dart';
+import 'package:flutter_animate/flutter_animate.dart';
+
+import 'package:fredgrotts_md3_demo/src/presentation/features/elevation_screen/elevation_grid.dart';
+import 'package:fredgrotts_md3_demo/src/presentation/widgets/responsive_centered_body.dart';
+
+
 
 class CenteredElevationScreen extends StatelessWidget {
   final ScrollController myScrollController = ScrollController();
@@ -19,7 +22,22 @@ class CenteredElevationScreen extends StatelessWidget {
     Color shadowColor = Theme.of(context).colorScheme.shadow;
     Color surfaceTint = Theme.of(context).colorScheme.primary;
 
-    final List<Widget> widgetList = [
+    Widget title = Text(
+      "Elevation",
+      style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+            fontWeight: FontWeight.bold,
+          ),
+    );
+
+    title = title
+        .animate(onPlay: (controller) => controller.repeat())
+        .shimmer(
+            duration: 1200.ms, color: Theme.of(context).colorScheme.secondary)
+        .animate() // this wraps the previous Animate in another Animate
+        .fadeIn(duration: 1200.ms, curve: Curves.easeOutQuad)
+        .slide();
+
+    List<Widget> widgetList = [
       Padding(
         padding: const EdgeInsets.fromLTRB(16.0, 20, 16.0, 0),
         child: Text(
@@ -52,33 +70,31 @@ class CenteredElevationScreen extends StatelessWidget {
 
     ];
 
-    return CenteredPageBody(
-      controller: myScrollController,
-      constraints: BoxConstraints(
-        maxWidth: MediaQuery.of(context).size.width,
-        minWidth: MediaQuery.of(context).size.width / 2,
-      ),
-      padding: EdgeInsets.only(left: MediaQuery.of(context).size.width / 10),
-      child: AnimationLimiter(
-        child: ListView.builder(
-          itemCount: widgetList.length,
-          controller: myScrollController,
-          itemBuilder: (BuildContext context, int index) {
-            return AnimationConfiguration.staggeredList(
-              position: index,
-              duration: const Duration(milliseconds: 375),
-              child: SlideAnimation(
-                verticalOffset: 50.0,
-                child: FadeInAnimation(
-                  child: widgetList[index],
-                ),
-              ),
+    widgetList = widgetList
+    .animate(interval: 600.ms)
+    .saturate(
+          duration: 900.ms,
+          delay: 300.ms,
+        );
 
-       
-            );
-          },
-        ),
+    
+
+    return ResponsiveCenteredBody(
+      controller: myScrollController,
+      bodyRatio: 1.0,
+      whichContent: WhichContent.oneContentBody,
+      isTwoContentBodies: false,
+      padding: EdgeInsets.only(left: MediaQuery.of(context).size.width / 10),
+      child: ListView(
+        controller: myScrollController,
+        children: [
+          title,
+          ...widgetList,
+          ],
       ),
+      
+      
+
       
       
     );

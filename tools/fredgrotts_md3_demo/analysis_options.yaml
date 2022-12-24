@@ -75,7 +75,7 @@ dart_code_metrics:
       # - avoid-late-keyword
      - avoid-missing-enum-constant-in-map
      - avoid-non-ascii-symbols
-     - avoid-non-null-assertion
+     # - avoid-non-null-assertion
      - avoid-passing-async-when-sync-expected
      - avoid-throw-in-catch-block
      - avoid-top-level-members-in-tests

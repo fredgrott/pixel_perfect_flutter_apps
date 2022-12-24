@@ -1,0 +1,7 @@
+Part of state management since 
+we are dealing with widgets 
+that preset state or set state to 
+be dynamic we have to 
+have ways of interacting with lifecycle 
+via a controller or via BLoC(MVVM)
+

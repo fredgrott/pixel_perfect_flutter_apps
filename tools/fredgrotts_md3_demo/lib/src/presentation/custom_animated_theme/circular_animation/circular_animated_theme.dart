@@ -158,6 +158,7 @@ class CircularAnimatedThemeState extends State<CircularAnimatedTheme>
 
   dynamic _takeScreenShot() {
     _captureKey.currentState!.captureImage((image) {
+      //
       // ignore: prefer-async-await
       precacheImage(MemoryImage(image.data), context).then((cachedImage) {
         setState(() {

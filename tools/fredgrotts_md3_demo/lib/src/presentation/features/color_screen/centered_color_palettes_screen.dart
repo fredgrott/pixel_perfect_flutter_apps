@@ -7,12 +7,15 @@
 // copyrigth 2021 see: https://github.com/flutter/samples/tree/main/experimental/material_3_demo
 
 import 'package:flutter/material.dart';
-import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+import 'package:flutter_animate/flutter_animate.dart';
+
 import 'package:fredgrotts_md3_demo/src/domain/entities/divider.dart';
 import 'package:fredgrotts_md3_demo/src/presentation/features/app/app_break_points.dart';
 import 'package:fredgrotts_md3_demo/src/presentation/features/color_screen/color_scheme_view.dart';
 import 'package:fredgrotts_md3_demo/src/presentation/themes/static_theme_datas.dart';
-import 'package:fredgrotts_md3_demo/src/presentation/widgets/centered_page_body.dart';
+import 'package:fredgrotts_md3_demo/src/presentation/widgets/responsive_centered_body.dart';
+
+
 
 class CenteredColorPalettesScreen extends StatelessWidget {
   final ScrollController myScrollController = ScrollController();
@@ -29,6 +32,23 @@ class CenteredColorPalettesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Widget title = Text(
+      "Color Palettes",
+      style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+            fontWeight: FontWeight.bold,
+          ),
+    );
+
+    title = title
+        .animate(onPlay: (controller) => controller.repeat())
+        .shimmer(
+            duration: 1200.ms, color: Theme.of(context).colorScheme.secondary,)
+        .animate() // This wraps the previous Animate in another Animate.
+        .fadeIn(duration: 1200.ms, curve: Curves.easeOutQuad,)
+        .slide();
+
+    
+
     Widget schemeLabel(String brightness) {
       return Padding(
         padding: const EdgeInsets.symmetric(vertical: 15),
@@ -48,139 +68,131 @@ class CenteredColorPalettesScreen extends StatelessWidget {
       );
     }
 
+    List<Widget> widgetListOne = [
+      divider,
+      schemeLabel('Light Theme'),
+      schemeView(lightStaticThemeData),
+      divider,
+      schemeLabel('Light HC Theme'),
+      schemeView(lighthighcontrastStaticThemeData),
+      divider,
+      divider,
+      schemeLabel('Dark Theme'),
+      schemeView(darkStaticThemeData),
+      divider,
+      schemeLabel('Dark HC Theme'),
+      schemeView(darkhighcontrastStaticThemeData),
+    ];
+
+    widgetListOne = widgetListOne
+        .animate(interval: 600.ms)
+        .saturate(
+          duration: 900.ms,
+          delay: 300.ms,
+        );
+
     if (SmallBreakpoint().isActive(context) ||
         MediumBreakpoint().isActive(context)) {
-      return CenteredPageBody(
+      return ResponsiveCenteredBody(
         controller: myScrollController,
-        constraints: BoxConstraints(
-          maxWidth: MediaQuery.of(context).size.width,
-          minWidth: MediaQuery.of(context).size.width / 2,
-        ),
+        bodyRatio: 1.0,
+        whichContent: WhichContent.oneContentBody,
+        isTwoContentBodies: false,
         padding: EdgeInsets.only(left: MediaQuery.of(context).size.width / 10),
         child: SingleChildScrollView(
           controller: myScrollController,
-          child: AnimationLimiter(
-            child: Column(
-              children: AnimationConfiguration.toStaggeredList(
-                duration: const Duration(milliseconds: 375),
-                childAnimationBuilder: (widget) => SlideAnimation(
-                  horizontalOffset: 50.0,
-                  child: FadeInAnimation(
-                    child: widget,
-                  ),
-                ),
-                children: [
-                  divider,
-                  schemeLabel('Light Theme'),
-                  schemeView(lightStaticThemeData),
-                  divider,
-                  schemeLabel('Light HC Theme'),
-                  schemeView(lighthighcontrastStaticThemeData),
-                  divider,
-                  divider,
-                  schemeLabel('Dark Theme'),
-                  schemeView(darkStaticThemeData),
-                  divider,
-                  schemeLabel('Dark HC Theme'),
-                  schemeView(darkhighcontrastStaticThemeData),
-                ],
-              ),
-            ),
+          child: Column(
+            children: [
+              title,
+              ...widgetListOne,
+            ],
+                
           ),
         ),
       );
     } else {
-      return CenteredPageBody(
+      return ResponsiveCenteredBody(
         controller: myScrollController,
-        constraints: BoxConstraints(
-          maxWidth: MediaQuery.of(context).size.width,
-          minWidth: MediaQuery.of(context).size.width / 2,
-        ),
+        bodyRatio: 1.0,
+        whichContent: WhichContent.oneContentBody,
+        isTwoContentBodies: false,
         padding: EdgeInsets.only(left: MediaQuery.of(context).size.width / 10),
         child: SingleChildScrollView(
           controller: myScrollController,
           child: Padding(
             padding: const EdgeInsets.only(top: 5),
-            child: Row(
+            child: Column(
               children: [
-                Expanded(
-                  child: AnimationLimiter(
-                    child: Column(
-                      children: AnimationConfiguration.toStaggeredList(
-                        duration: const Duration(milliseconds: 375),
-                        childAnimationBuilder: (widget) => SlideAnimation(
-                          horizontalOffset: 50.0,
-                          child: FadeInAnimation(
-                            child: widget,
-                          ),
-                        ),
-                        children: [
-                          schemeLabel('Light Theme'),
-                          schemeView(lightStaticThemeData),
-                        ],
-                      ),
-                    ),
+                Row(
+                  children: [
+                    Expanded(
+                  child: Column(
+                    children: [
+                      title,
+                    ],
+                  ),
+                ),
+                  ],
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                  child: Column(
+                    children: [
+                      schemeLabel('Light Theme'),
+                      schemeView(lightStaticThemeData),
+                    ]
+                        .animate(interval: 600.ms)
+                        .saturate(
+                              duration: 900.ms,
+                              delay: 300.ms,
+                            ),
                   ),
                 ),
                 Expanded(
-                  child: AnimationLimiter(
-                    child: Column(
-                      children: AnimationConfiguration.toStaggeredList(
-                        duration: const Duration(milliseconds: 375),
-                        childAnimationBuilder: (widget) => SlideAnimation(
-                          horizontalOffset: 50.0,
-                          child: FadeInAnimation(
-                            child: widget,
-                          ),
-                        ),
-                        children: [
-                          schemeLabel('Light HC Theme'),
-                          schemeView(lighthighcontrastStaticThemeData),
-                        ],
-                      ),
-                    ),
+                  child: Column(
+                    children: [
+                      schemeLabel('Light HC Theme'),
+                      schemeView(lighthighcontrastStaticThemeData),
+                    ]
+                        .animate(interval: 600.ms)
+                        .saturate(
+                              duration: 900.ms,
+                              delay: 300.ms,
+                            ),
                   ),
                 ),
                 Expanded(
-                  child: AnimationLimiter(
-                    child: Column(
-                      children: AnimationConfiguration.toStaggeredList(
-                        duration: const Duration(milliseconds: 375),
-                        childAnimationBuilder: (widget) => SlideAnimation(
-                          horizontalOffset: 50.0,
-                          child: FadeInAnimation(
-                            child: widget,
-                          ),
-                        ),
-                        children: [
-                          schemeLabel('Dark Theme'),
-                          schemeView(darkStaticThemeData),
-                        ],
-                      ),
-                    ),
+                  child: Column(
+                    children: [
+                      schemeLabel('Dark Theme'),
+                      schemeView(darkStaticThemeData),
+                    ]
+                        .animate(interval: 600.ms)
+                        .saturate(
+                              duration: 900.ms,
+                              delay: 300.ms,
+                            ),
                   ),
                 ),
                 Expanded(
-                  child: AnimationLimiter(
-                    child: Column(
-                      children: AnimationConfiguration.toStaggeredList(
-                        duration: const Duration(milliseconds: 375),
-                        childAnimationBuilder: (widget) => SlideAnimation(
-                          horizontalOffset: 50.0,
-                          child: FadeInAnimation(
-                            child: widget,
-                          ),
-                        ),
-                        children: [
-                          schemeLabel('Dark HC Theme'),
-                          schemeView(darkhighcontrastStaticThemeData),
-                        ],
-                      ),
-                    ),
+                  child: Column(
+                    children: [
+                      schemeLabel('Dark HC Theme'),
+                      schemeView(darkhighcontrastStaticThemeData),
+                    ]
+                        .animate(interval: 600.ms)
+                        .saturate(
+                              duration: 900.ms,
+                              delay: 300.ms,
+                            ),
                   ),
+                ),
+                  ],
                 ),
               ],
             ),
+            
           ),
         ),
       );

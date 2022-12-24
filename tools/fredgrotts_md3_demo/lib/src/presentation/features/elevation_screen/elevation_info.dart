@@ -7,14 +7,16 @@
 // copyrigth 2021 see: https://github.com/flutter/samples/tree/main/experimental/material_3_demo
 
 class ElevationInfo {
+  final int level;
+  final double elevation;
+  final int overlayPercent;
+  
   const ElevationInfo(
     this.level,
     this.elevation,
     this.overlayPercent,
   );
-  final int level;
-  final double elevation;
-  final int overlayPercent;
+  
 }
 
 const List<ElevationInfo> elevations = <ElevationInfo>[

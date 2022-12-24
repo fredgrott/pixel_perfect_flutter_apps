@@ -20,6 +20,10 @@ enum WhichContent {
 //       in another to get the two distinct differnt pages for the two screens in foldables.
 //       In non foldables could probably still assume both contal panels assumed as that seems
 //       to be the assumption of the flutter adaptive package.
+//
+//       Core architect concept is that the body and secondBody slots in the adaptive alyout
+//       class use BoxConstraints use the Size construct so if I set the max in BoxConstraints
+//       my child widget will adjust downward in size bsed upon the parent BoxConstraint Size consgtruct settings.
 
 /// This class is specifically engineered to be use with the Flutter Adaptive Scaffold package.
 /// Since the flutter adaptice scaffold package uses BoxConstraints.ttight and other things
@@ -54,6 +58,8 @@ class ResponsiveCenteredBody extends StatelessWidget {
 
   final bool isTwoContentBodies;
 
+  final Axis bodyOrientation;
+
   const ResponsiveCenteredBody({
     super.key,
     this.controller,
@@ -62,24 +68,48 @@ class ResponsiveCenteredBody extends StatelessWidget {
     required this.child,
     required this.whichContent,
     required this.isTwoContentBodies,
+    required this.bodyOrientation,
   });
 
   @override
   Widget build(BuildContext context) {
     final double width = MediaQuery.of(context).size.width;
-
+    final double height = MediaQuery.of(context).size.height;
     late double trueContentWidth;
+    late double trueContentHeight;
 
-    if (isTwoContentBodies) {
-      if (whichContent == WhichContent.oneContentBody) {
+    if (bodyOrientation == Axis.horizontal) {
+      if (isTwoContentBodies) {
+        if (whichContent == WhichContent.oneContentBody) {
+          trueContentWidth = width / bodyRatio;
+          trueContentHeight = height;
+        }
+        if (whichContent == WhichContent.twoContentBody) {
+          trueContentWidth = width / (1.0 - bodyRatio);
+          trueContentHeight = height;
+        }
+      } else {
         trueContentWidth = width / bodyRatio;
-      }
-      if (whichContent == WhichContent.twoContentBody) {
-        trueContentWidth = width / (1.0 - bodyRatio);
+        trueContentHeight = height;
       }
     } else {
-      trueContentWidth = width / bodyRatio;
+      // Compute max height for vertical body content.
+      if (isTwoContentBodies) {
+        if (whichContent == WhichContent.oneContentBody) {
+          trueContentHeight = height / bodyRatio;
+          trueContentWidth = width;
+        }
+        if (whichContent == WhichContent.twoContentBody) {
+          trueContentHeight = height / (1.0 - bodyRatio);
+          trueContentWidth = width;
+        }
+      } else {
+        trueContentHeight = height / bodyRatio;
+        trueContentWidth = width;
+      }
     }
+
+    
 
     return Scrollbar(
       controller: controller,
@@ -94,6 +124,7 @@ class ResponsiveCenteredBody extends StatelessWidget {
           child: ConstrainedBox(
             constraints: BoxConstraints(
               maxWidth: trueContentWidth,
+              maxHeight: trueContentHeight,
             ),
             child: ScrollConfiguration(
               behavior:

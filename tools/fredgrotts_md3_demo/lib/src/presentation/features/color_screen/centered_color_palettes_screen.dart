@@ -98,6 +98,7 @@ class CenteredColorPalettesScreen extends StatelessWidget {
         bodyRatio: 1.0,
         whichContent: WhichContent.oneContentBody,
         isTwoContentBodies: false,
+        bodyOrientation: Axis.horizontal,
         padding: EdgeInsets.only(left: MediaQuery.of(context).size.width / 10),
         child: SingleChildScrollView(
           controller: myScrollController,
@@ -116,6 +117,7 @@ class CenteredColorPalettesScreen extends StatelessWidget {
         bodyRatio: 1.0,
         whichContent: WhichContent.oneContentBody,
         isTwoContentBodies: false,
+        bodyOrientation: Axis.horizontal,
         padding: EdgeInsets.only(left: MediaQuery.of(context).size.width / 10),
         child: SingleChildScrollView(
           controller: myScrollController,

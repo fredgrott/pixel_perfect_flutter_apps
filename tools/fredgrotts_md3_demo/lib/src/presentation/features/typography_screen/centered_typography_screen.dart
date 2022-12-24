@@ -86,6 +86,7 @@ class CenteredTypographyScreen extends StatelessWidget {
       whichContent: WhichContent.oneContentBody,
       isTwoContentBodies: false,
       bodyRatio: 1.0,
+      bodyOrientation: Axis.horizontal,
       padding: EdgeInsets.only(left: MediaQuery.of(context).size.width / 10),
       child: ListView(
         controller: myScrollController,

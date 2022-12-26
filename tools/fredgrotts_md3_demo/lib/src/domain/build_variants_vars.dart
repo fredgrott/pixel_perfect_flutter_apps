@@ -11,13 +11,13 @@ enum Environment {
   preview,
 }
 
-late bool isItDebug = false;
+bool isItDebug = false;
 
-late bool isItStagging = false;
+bool isItStagging = false;
 
-late bool isItProd = false;
+bool isItProd = false;
 
-late bool isItPreview = false;
+bool isItPreview = false;
 
 class Constants {
   late Map<String, dynamic> _config;

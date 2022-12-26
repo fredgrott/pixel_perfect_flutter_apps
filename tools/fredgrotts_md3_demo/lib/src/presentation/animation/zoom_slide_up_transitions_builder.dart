@@ -2,12 +2,16 @@
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
+// ignore_for_file: use_named_constants
+
 import 'package:flutter/material.dart';
 
 class ZoomSlideUpTransitionsBuilder extends PageTransitionsBuilder {
   const ZoomSlideUpTransitionsBuilder();
 
   @override
+  //
+  // ignore: long-parameter-list
   Widget buildTransitions<T>(
     PageRoute<T> route,
     BuildContext context,

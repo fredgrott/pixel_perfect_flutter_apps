@@ -18,7 +18,7 @@ import 'package:fredgrotts_md3_demo/src/presentation/features/components_screen/
 class ButtonsWithoutIcon extends StatefulWidget {
   final bool isDisabled;
 
-  const ButtonsWithoutIcon({super.key, required this.isDisabled});
+  const ButtonsWithoutIcon({super.key, required this.isDisabled,});
 
   @override
   State<ButtonsWithoutIcon> createState() => _ButtonsWithoutIconState();
@@ -35,26 +35,36 @@ class _ButtonsWithoutIconState extends State<ButtonsWithoutIcon> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             ElevatedButton(
+              //
+              // ignore: no-empty-block
               onPressed: () {},
               child: const Text('Elevated'),
             ),
             colDivider,
             FilledButton(
+              //
+              // ignore: no-empty-block
               onPressed: () {},
               child: const Text('Filled'),
             ),
             colDivider,
             FilledButton.tonal(
+              //
+              // ignore: no-empty-block
               onPressed: () {},
               child: const Text('Filled Tonal'),
             ),
             colDivider,
             OutlinedButton(
+              //
+              // ignore: no-empty-block
               onPressed: () {},
               child: const Text('Outlined'),
             ),
             colDivider,
             TextButton(
+              //
+              // ignore: no-empty-block
               onPressed: () {},
               child: const Text('Text'),
             ),
@@ -67,27 +77,27 @@ class _ButtonsWithoutIconState extends State<ButtonsWithoutIcon> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             ElevatedButton(
-              onPressed: handlePressed(context, widget.isDisabled, 'ElevatedButton'),
+              onPressed: handlePressed(context, widget.isDisabled, 'ElevatedButton',),
               child: const Text('Elevated'),
             ),
             colDivider,
             FilledButton(
-              onPressed: handlePressed(context, widget.isDisabled, 'FilledButton'),
+              onPressed: handlePressed(context, widget.isDisabled, 'FilledButton',),
               child: const Text('Filled'),
             ),
             colDivider,
             FilledButton.tonal(
-              onPressed: handlePressed(context, widget.isDisabled, 'Filled Tonal Button'),
+              onPressed: handlePressed(context, widget.isDisabled, 'Filled Tonal Button',),
               child: const Text('Filled Tonal'),
             ),
             colDivider,
             OutlinedButton(
-              onPressed: handlePressed(context, widget.isDisabled, 'Outlined Button'),
+              onPressed: handlePressed(context, widget.isDisabled, 'Outlined Button',),
               child: const Text('Outlined'),
             ),
             colDivider,
             TextButton(
-              onPressed: handlePressed(context, widget.isDisabled, 'Text Button'),
+              onPressed: handlePressed(context, widget.isDisabled, 'Text Button',),
               child: const Text('Text'),
             ),
           ],

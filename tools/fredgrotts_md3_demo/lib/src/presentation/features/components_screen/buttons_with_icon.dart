@@ -27,31 +27,31 @@ class _ButtonsWithIconState extends State<ButtonsWithIcon> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           ElevatedButton.icon(
-            onPressed: handlePressed(context, false, 'ElevatedButton'),
+            onPressed: handlePressed(context, false, 'ElevatedButton',),
             icon: const Icon(Icons.add),
             label: const Text('Icon'),
           ),
           colDivider,
           FilledButton.icon(
-            onPressed: handlePressed(context, false, 'FilledButton'),
+            onPressed: handlePressed(context, false, 'FilledButton',),
             label: const Text('Icon'),
             icon: const Icon(Icons.add),
           ),
           colDivider,
           FilledButton.tonalIcon(
-            onPressed: handlePressed(context, false, 'Filled TonalButton'),
+            onPressed: handlePressed(context, false, 'Filled TonalButton',),
             label: const Text('Icon'),
             icon: const Icon(Icons.add),
           ),
           colDivider,
           OutlinedButton.icon(
-            onPressed: handlePressed(context, false, 'Outlined Button'),
+            onPressed: handlePressed(context, false, 'Outlined Button',),
             icon: const Icon(Icons.add),
             label: const Text('Icon'),
           ),
           colDivider,
           TextButton.icon(
-            onPressed: handlePressed(context, false, 'Text Button'),
+            onPressed: handlePressed(context, false, 'Text Button',),
             icon: const Icon(Icons.add),
             label: const Text('Icon'),
           ),

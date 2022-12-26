@@ -746,6 +746,8 @@ class MaterialScrollBehavior extends ScrollBehavior {
 class _MaterialAppState extends State<CustomAnimatedThemeApp> {
   late HeroController _heroController;
   ThemeMode? lastThemeMode;
+  //
+  // ignore: prefer-correct-identifier-length
   GlobalKey<CircularAnimatedThemeState> key = GlobalKey();
 
   bool get _usesRouter => widget.routerDelegate != null;
@@ -850,10 +852,12 @@ class _MaterialAppState extends State<CustomAnimatedThemeApp> {
               (mode == ThemeMode.system &&
                   platformBrightness == ui.Brightness.dark)) {
             theme = widget.theme;
-          } else
+          } else {
             theme ??= widget.darkTheme ?? ThemeData.fallback();
-        } else
+          }
+        } else {
           theme ??= widget.darkTheme ?? ThemeData.fallback();
+        }
 
         // Use a light theme, dark theme, or fallback theme.
         if (widget.darkTheme != null) {
@@ -900,7 +904,7 @@ class _MaterialAppState extends State<CustomAnimatedThemeApp> {
                       // surround widget.builder with yet another builder so that
                       // a context separates them and Theme.of() correctly
                       // resolves to the theme we passed to AnimatedTheme.
-                      return widget.builder!(context, child);
+                      return widget.builder!(context, child,);
                     },
                   )
                 : child!,
@@ -928,7 +932,7 @@ class _MaterialAppState extends State<CustomAnimatedThemeApp> {
                       // surround widget.builder with yet another builder so that
                       // a context separates them and Theme.of() correctly
                       // resolves to the theme we passed to AnimatedTheme.
-                      return widget.builder!(context, child);
+                      return widget.builder!(context, child,);
                     },
                   )
                 : child!,
@@ -959,7 +963,7 @@ class _MaterialAppState extends State<CustomAnimatedThemeApp> {
                       // surround widget.builder with yet another builder so that
                       // a context separates them and Theme.of() correctly
                       // resolves to the theme we passed to AnimatedTheme.
-                      return widget.builder!(context, child);
+                      return widget.builder!(context, child,);
                     },
                   )
                 : child!,

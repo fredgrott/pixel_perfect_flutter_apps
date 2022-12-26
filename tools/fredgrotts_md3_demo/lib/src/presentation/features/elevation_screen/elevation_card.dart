@@ -6,6 +6,8 @@
 // the experimental part of Flutter Samples under BSD-clause 3 license
 // copyrigth 2021 see: https://github.com/flutter/samples/tree/main/experimental/material_3_demo
 
+// ignore_for_file: noop_primitive_operations
+
 import 'package:flutter/material.dart';
 import 'package:fredgrotts_md3_demo/src/presentation/features/elevation_screen/elevation_info.dart';
 

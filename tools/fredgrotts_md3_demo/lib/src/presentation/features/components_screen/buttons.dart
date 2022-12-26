@@ -6,6 +6,8 @@
 // the experimental part of Flutter Samples under BSD-clause 3 license
 // copyrigth 2021 see: https://github.com/flutter/samples/tree/main/experimental/material_3_demo
 
+// ignore_for_file: avoid_positional_boolean_parameters
+
 import 'package:flutter/material.dart';
 import 'package:fredgrotts_md3_demo/src/domain/entities/divider.dart';
 import 'package:fredgrotts_md3_demo/src/presentation/features/components_screen/buttons_with_icon.dart';
@@ -36,7 +38,7 @@ class _ButtonsState extends State<Buttons> {
 }
 
 void Function()? handlePressed(
-    BuildContext context, bool isDisabled, String buttonName) {
+    BuildContext context, bool isDisabled, String buttonName,) {
   return isDisabled
       ? null
       : () {
@@ -48,6 +50,8 @@ void Function()? handlePressed(
             action: SnackBarAction(
               textColor: Theme.of(context).colorScheme.surface,
               label: 'Close',
+              //
+              // ignore: no-empty-block
               onPressed: () {},
             ),
           );

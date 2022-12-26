@@ -19,8 +19,8 @@ class CenteredElevationScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Color shadowColor = Theme.of(context).colorScheme.shadow;
-    Color surfaceTint = Theme.of(context).colorScheme.primary;
+    final Color shadowColor = Theme.of(context).colorScheme.shadow;
+    final Color surfaceTint = Theme.of(context).colorScheme.primary;
 
     Widget title = Text(
       "Elevation",
@@ -32,14 +32,14 @@ class CenteredElevationScreen extends StatelessWidget {
     title = title
         .animate(onPlay: (controller) => controller.repeat())
         .shimmer(
-            duration: 1200.ms, color: Theme.of(context).colorScheme.secondary)
-        .animate() // this wraps the previous Animate in another Animate
-        .fadeIn(duration: 1200.ms, curve: Curves.easeOutQuad)
+            duration: 1200.ms, color: Theme.of(context).colorScheme.secondary,)
+        .animate() // This wraps the previous Animate in another Animate.
+        .fadeIn(duration: 1200.ms, curve: Curves.easeOutQuad,)
         .slide();
 
     List<Widget> widgetList = [
       Padding(
-        padding: const EdgeInsets.fromLTRB(16.0, 20, 16.0, 0),
+        padding: const EdgeInsets.only(left: 16.0, top: 20, right: 16.0,),
         child: Text(
           'Surface Tint only',
           style: Theme.of(context).textTheme.titleLarge,
@@ -48,7 +48,7 @@ class CenteredElevationScreen extends StatelessWidget {
       ElevationGrid(surfaceTintColor: surfaceTint),
       const SizedBox(height: 10),
       Padding(
-        padding: const EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 0),
+        padding: const EdgeInsets.only(left: 16.0, top: 8.0, right: 16.0,),
         child: Text(
           'Surface Tint and Shadow',
           style: Theme.of(context).textTheme.titleLarge,
@@ -60,7 +60,7 @@ class CenteredElevationScreen extends StatelessWidget {
       ),
       const SizedBox(height: 10),
       Padding(
-        padding: const EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 0),
+        padding: const EdgeInsets.only(left: 16.0, top: 8.0, right: 16.0,),
         child: Text(
           'Shadow only',
           style: Theme.of(context).textTheme.titleLarge,

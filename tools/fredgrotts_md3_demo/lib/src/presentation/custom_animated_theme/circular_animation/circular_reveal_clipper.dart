@@ -30,15 +30,15 @@ class CircularRevealClipper extends CustomClipper<Path> {
   Path getClip(Size size) {
     final Offset center = centerAlignment?.alongSize(size) ??
         centerOffset ??
-        Offset(size.width / 2, size.height / 2);
+        Offset(size.width / 2, size.height / 2,);
     final minRadius = this.minRadius ?? 0;
-    final maxRadius = this.maxRadius ?? calcMaxRadius(size, center);
+    final maxRadius = this.maxRadius ?? calcMaxRadius(size, center,);
 
     return Path()
       ..addOval(
         Rect.fromCircle(
           center: center,
-          radius: lerpDouble(minRadius, maxRadius, fraction)!,
+          radius: lerpDouble(minRadius, maxRadius, fraction,)!,
         ),
       );
   }
@@ -47,7 +47,11 @@ class CircularRevealClipper extends CustomClipper<Path> {
   bool shouldReclip(CustomClipper<Path> oldClipper) => true;
 
   static double calcMaxRadius(Size size, Offset center,) {
+    //
+    // ignore: prefer-correct-identifier-length
     final w = max(center.dx, size.width - center.dx,);
+    //
+    // ignore: prefer-correct-identifier-length
     final h = max(center.dy, size.height - center.dy,);
 
     return sqrt(w * w + h * h);

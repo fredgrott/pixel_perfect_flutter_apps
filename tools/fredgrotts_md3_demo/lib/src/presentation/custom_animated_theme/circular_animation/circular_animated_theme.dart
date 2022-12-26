@@ -48,6 +48,8 @@ class CircularAnimatedTheme extends StatefulWidget {
 
   /// Specifies the color and typography values for descendant widgets.
   final ThemeData data;
+  //
+  // ignore: prefer-correct-identifier-length
   final ThemeData end;
 
   /// True if this theme was created by the [MaterialApp]. See [Theme.isMaterialAppTheme].
@@ -103,7 +105,7 @@ class CircularAnimatedThemeState extends State<CircularAnimatedTheme>
               alignment: Alignment.topLeft,
               width: 5,
               height: 5,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 shape: BoxShape.circle,
               ),
             ),
@@ -160,7 +162,7 @@ class CircularAnimatedThemeState extends State<CircularAnimatedTheme>
     _captureKey.currentState!.captureImage((image) {
       //
       // ignore: prefer-async-await
-      precacheImage(MemoryImage(image.data), context).then((cachedImage) {
+      precacheImage(MemoryImage(image.data), context,).then((cachedImage) {
         setState(() {
           _image = image;
         });
@@ -174,7 +176,7 @@ class CircularAnimatedThemeState extends State<CircularAnimatedTheme>
     });
   }
 
-  void _onChangeTheme() async {
+  Future<void> _onChangeTheme() async {
     setState(() => rect = RectGetter.getRectFromKey(rectGetterKey));
     WidgetsBinding.instance!.addPostFrameCallback((_) {
       setState(() =>

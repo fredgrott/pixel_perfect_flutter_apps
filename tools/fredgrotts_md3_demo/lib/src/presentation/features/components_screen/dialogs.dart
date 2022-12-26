@@ -26,10 +26,10 @@ class _DialogsState extends State<Dialogs> {
       configuration: const FadeScaleTransitionConfiguration(),
       context: context,
       builder: (context) => AlertDialog(
-        // BackgroundColor: semanticColors?.semanticContainerTwo,.o,
+        // BackgroundColor: semanticColors?.semanticContainerTwo,.o,.
         title: const Text(
           'Basic Dialog Title',
-          // Style: TextStyle(color: semanticColors?.onSemanticContainerTwo),.wo),
+          // Style: TextStyle(color: semanticColors?.onSemanticContainerTwo),.wo),.
         ),
         content: const Text(
           'A dialog is a type of modal window that appears in front of app content to provide critical information, or prompt for a decision to be made.',

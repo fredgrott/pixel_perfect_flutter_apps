@@ -28,9 +28,9 @@ dependencies:
   flutter_animate: ^2.0.1
   flutter_bloc_patterns: ^0.11.0
   catcher: ^0.7.0
-  device_preview: ^1.1.0
-  screenshot_modes: ^1.0.1
+  
   path: ^1.8.2
+  
   
   
 

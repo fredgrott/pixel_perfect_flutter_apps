@@ -6,6 +6,8 @@
 // the experimental part of Flutter Samples under BSD-clause 3 license
 // copyrigth 2021 see: https://github.com/flutter/samples/tree/main/experimental/material_3_demo
 
+// ignore_for_file: avoid_positional_boolean_parameters
+
 import 'package:flutter/material.dart';
 
 ButtonStyle enabledFilledButtonStyle(

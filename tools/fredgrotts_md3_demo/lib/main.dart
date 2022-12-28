@@ -2,6 +2,7 @@
 
 import 'dart:async';
 
+
 import 'package:catcher/catcher.dart';
 import 'package:flutter/material.dart';
 
@@ -9,28 +10,27 @@ import 'package:fredgrotts_md3_demo/src/domain/catcher_options.dart';
 import 'package:fredgrotts_md3_demo/src/domain/set_up_app_logging.dart';
 import 'package:fredgrotts_md3_demo/src/presentation/features/app/demo_app.dart';
 
-
 import 'package:fredgrotts_md3_demo/src/presentation/features/app/theme_store.dart';
+
 
 // Required for build variants functionality.
 void mainDelegate() => main();
-
 
 void main() async {
   final binding = WidgetsFlutterBinding.ensureInitialized();
 
   // This is how to implement an asset cache.
   //binding.addPostFrameCallback((_) async {
-   // final Element? context = binding.renderViewElement;
-    //if (context != null) {
-      //for (final asset in assetList) {
-       // precacheImage(
-        //  AssetImage(asset),
-        //  context,
-       // );
-     // }
-   // }
- // });
+  // final Element? context = binding.renderViewElement;
+  //if (context != null) {
+  //for (final asset in assetList) {
+  // precacheImage(
+  //  AssetImage(asset),
+  //  context,
+  // );
+  // }
+  // }
+  // });
 
   setUpAppLogging();
 
@@ -44,15 +44,14 @@ void main() async {
         debugConfig: debugOptions,
         releaseConfig: releaseOptions,
         profileConfig: profileOptions,
-        runAppFunction: ()  {
-          runApp(ThemeStore(
-            
-            child: DemoApp(),
-          ),);
-
+        runAppFunction: () {
+          runApp(
+            ThemeStore(
+              child: DemoApp(),
+            ),
+          );
         },
       );
-      
     },
     (
       error,

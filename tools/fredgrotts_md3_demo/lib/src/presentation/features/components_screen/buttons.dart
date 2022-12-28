@@ -10,6 +10,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:fredgrotts_md3_demo/src/domain/entities/divider.dart';
+import 'package:fredgrotts_md3_demo/src/presentation/features/app/demo_app.dart';
 import 'package:fredgrotts_md3_demo/src/presentation/features/components_screen/buttons_with_icon.dart';
 import 'package:fredgrotts_md3_demo/src/presentation/features/components_screen/buttons_without_icon.dart';
 
@@ -55,7 +56,8 @@ void Function()? handlePressed(
               onPressed: () {},
             ),
           );
-
-          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+          // It would help if we use the updated API!
+          // See https://docs.flutter.dev/release/breaking-changes/scaffold-messenger
+          rootScaffoldMessengerKey.currentState!.showSnackBar(snackBar);
         };
 }

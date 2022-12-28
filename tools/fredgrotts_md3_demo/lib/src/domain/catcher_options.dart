@@ -7,7 +7,10 @@
 import 'package:catcher/catcher.dart';
 import 'package:fredgrotts_md3_demo/src/domain/catcher_custom_logger.dart';
 
-final ReportMode reportMode = PageReportMode(showStackTrace: true);
+// Per Issue repot https://github.com/jhomlala/catcher/issues/197
+// I have to use SilentRportMode as even supplying navigatorKey via
+// routes does not fully resovle it.
+final ReportMode reportMode = SilentReportMode();
 
 const String kAppErrorEmailAddyOne = "myname@myname.com";
 const String kAppErrorEmailAddyTwo = "myname@myname.com";
